@@ -2,7 +2,6 @@
 %{ 
 #include<bits/stdc++.h>
 using namespace std;
-
 unordered_map <string,int>  keyword;
 unordered_map <string,int>  identifier;
 unordered_map <string,int>  literal;
@@ -11,6 +10,9 @@ unordered_map <string,int>  optor;
 
 %} 
   
+
+%option yylineno
+
 Underscores \_[\_]*
 
 Keyword "abstract"|"continue"|"for"|"new"|"switch"|"assert"|"default"|"if"|"package"|"synchronized"|"boolean"|"do"|"goto"|"private"|"this"|"break"|"double"|"implements"|"protected"|"throw"|"byte"|"else"|"import"|"public"|"throws"|"case"|"enum"|"instanceof"|"return"|"transient"|"catch"|"extends"|"int"|"short"|"try"|"char"|"final"|"interface"|"static"|"void"|"class"|"finally"|"long"|"strictfp"|"volatile"|"const"|"float"|"native"|"super"|"while" 
@@ -23,29 +25,29 @@ NullLiteral null
 Digit [0-9]
 NonZeroDigit 1|2|3|4|5|6|7|8|9
 JavaLetter [a-zA-Z]
-JavaLetterOrDigit [A-Za-z0-9]
+JavaLetterOrDigit [A-Za-z0-9\_\$]
 IdentifierChars {JavaLetter}{JavaLetterOrDigit}*
 Identifier {IdentifierChars}
 
 BinaryDigit 0|1
-BinaryDigitOrUnderscore {BinaryDigit}|"_"
+BinaryDigitOrUnderscore \_|{BinaryDigit}
 BinaryDigitsAndUnderscores {BinaryDigitOrUnderscore}{BinaryDigitOrUnderscore}*
 BinaryDigits {BinaryDigit}|{BinaryDigit}{BinaryDigitsAndUnderscores}?{BinaryDigit}
-BinaryNumeral 0b{BinaryDigits}|0B{BinaryDigits}
+BinaryNumeral 0B{BinaryDigits}|0b{BinaryDigits}
 
-OctalDigit 0|1|2|3|4|5|6|7
-OctalDigitOrUnderscore {OctalDigit}|"_"
+OctalDigit 7|6|5|4|3|2|1|0
+OctalDigitOrUnderscore \_|{OctalDigit}
 OctalDigitsAndUnderscores {OctalDigitOrUnderscore}{OctalDigitOrUnderscore}*
 OctalDigits {OctalDigit}|{OctalDigit}{OctalDigitsAndUnderscores}?{OctalDigit}
-OctalNumeral 0{OctalDigits}|0{Underscores}{OctalDigits}
+OctalNumeral 0{Underscores}{OctalDigits}0{OctalDigits}
 
-HexDigit 0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F
-HexDigitOrUnderscore {HexDigit}|"_"
+HexDigit 0|1|2|3|4|5|6|7|8|9|A|a|B|b|C|c|D|d|E|e|F|f
+HexDigitOrUnderscore \_|{HexDigit}
 HexDigitsAndUnderscores {HexDigitOrUnderscore}{HexDigitOrUnderscore}*
 HexDigits {HexDigit}|{HexDigit}{HexDigitsAndUnderscores}?{HexDigit}
 HexNumeral 0x{HexDigits}|0X{HexDigits}
 
-DigitOrUnderscore {Digit}|"_"
+DigitOrUnderscore \_|{Digit}
 DigitsAndUnderscores {DigitOrUnderscore}{DigitOrUnderscore}*
 Digits {Digit}|{Digit}{DigitsAndUnderscores}?{Digit}
 DecimalNumeral 0|{NonZeroDigit}{Digits}?|{NonZeroDigit}{Underscores}{Digits}
@@ -159,27 +161,29 @@ else
 
 {WhiteSpace} {;}
 {Comment} {;}
-. {cout<<"invalid char";}
+. {cout<<"Error on line no. "<<yylineno<<" due to invalid char(s) "<<yytext<<endl;}
+[A-Za-z0-9]* {cout<<"Error on line no. "<<yylineno<<" due to invalid char(s) "<<yytext<<endl;}
 %% 
   
 int yywrap(void){}
 int main() 
 {    
     // The function that starts the analysis 
-    yylex(); 
+    yylex();
+	cout<<"Lexeme,Token,Count"<<endl; 
   for(auto i = keyword.begin();i!=keyword.end();i++)
-    cout<<i->first<<" "<<"Keyword"<<" "<<i->second<<endl;
+    cout<<i->first<<","<<"Keyword"<<","<<i->second<<endl;
 
   for(auto i = optor.begin();i!=optor.end();i++)
-    cout<<i->first<<" "<<"Operator"<<" "<<i->second<<endl;
+    cout<<i->first<<","<<"Operator"<<","<<i->second<<endl;
 
   for(auto i = literal.begin();i!=literal.end();i++)
-    cout<<i->first<<" "<<"Literal"<<" "<<i->second<<endl;
+    cout<<i->first<<","<<"Literal"<<","<<i->second<<endl;
 
   for(auto i = identifier.begin();i!=identifier.end();i++)
-    cout<<i->first<<" "<<"Identifier"<<" "<<i->second<<endl;
+    cout<<i->first<<","<<"Identifier"<<","<<i->second<<endl;
 
   for(auto i = separator.begin();i!=separator.end();i++)
-    cout<<i->first<<" "<<"Separator"<<" "<<i->second<<endl;
+    cout<<i->first<<","<<"Separator"<<","<<i->second<<endl;
     return 0; 
 } 
