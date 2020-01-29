@@ -161,8 +161,9 @@ else
 
 {WhiteSpace} {;}
 {Comment} {;}
-. {cout<<"Error on line no. "<<yylineno<<" due to invalid char(s) "<<yytext<<endl;}
-[A-Za-z0-9]* {cout<<"Error on line no. "<<yylineno<<" due to invalid char(s) "<<yytext<<endl;}
+. {cerr<<"Error on line no. "<<yylineno<<" due to invalid char(s) "<<yytext<<endl;}
+[A-Za-z0-9\_\$]* {cerr<<"Error on line no. "<<yylineno<<" due to invalid char(s) "<<yytext<<endl;}
+
 %% 
   
 int yywrap(void){}
