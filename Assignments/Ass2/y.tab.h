@@ -56,8 +56,11 @@ extern int yydebug;
     CHAPTER = 266,
     SECTION = 267,
     COLON = 268,
-    SECTIONNUM = 269,
-    NOTNEWLINES = 270
+    NUM = 269,
+    NOTNEWLINES = 270,
+    NEWLINE = 271,
+    SENTENCESEPARATOR = 272,
+    WORDSEPARATOR = 273
   };
 #endif
 /* Tokens.  */
@@ -72,12 +75,26 @@ extern int yydebug;
 #define CHAPTER 266
 #define SECTION 267
 #define COLON 268
-#define SECTIONNUM 269
+#define NUM 269
 #define NOTNEWLINES 270
+#define NEWLINE 271
+#define SENTENCESEPARATOR 272
+#define WORDSEPARATOR 273
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 13 "test.y" /* yacc.c:1909  */
+
+        int number;
+        char *string;
+
+#line 95 "y.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

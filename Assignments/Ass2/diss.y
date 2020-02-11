@@ -1,78 +1,67 @@
 
 %{ 
    /* Definition section */
-  #include<stdio.h> 
-  #include<stdlib.h> 
+#include<bits/stdc++.h>
+int     yylex();
+ void yyerror(char *msg);
 %} 
-  
+
 
 %token WORD WORDS INTERROGATIVE EXCLAMATORY DECLARATIVE WHITESPACE WHITESPACES TITLE CHAPTER SECTION COLON SECTIONNUM NOTNEWLINES
-%start dissertation
-
+%start  titleline
+%union 
+{
+        int number;
+        char *string;
+}
+%type <string> titleline WORDS dissertation
 %%
 
         
 dissertation:
-        titleline WHITESPACES chaptersone
-        ;
-chaptersone:
-        chapter chapters
-        ;
-chapters:
-        chapter chapters
+        lines WHITESPACES dissertation
         |
         ;
-chapter:
-        chapterline WHITESPACES sections
-        ;
-sections:
-        section WHITESPACES sections
+lines:
+        titleline
         |
-        ;
-section:
-        sectionline WHITESPACES paragraphsone
-        ;
-paragraphsone:
-        paragraph WHITESPACES paragraphs
-        ;
-paragraphs:
-        paragraph WHITESPACES paragraphs
+        chapterline
         |
-        ;
-paragraph:
-        sentence NOTNEWLINES sentencesone; 
-
-sentencesone:
-        sentence NOTNEWLINES sentences
+        sectionline
+        |
+        sentences
         ;
 sentences:
-        sentence NOTNEWLINES sentences
+        NOTNEWLINES sentence NOTNEWLINES sentences
         |
+        NOTNEWLINES
         ;
 sentence:
-        DECLARATIVE 
+        EXCLAMATORY
+        |
+        DECLARATIVE
         |
         INTERROGATIVE
-        |
-        EXCLAMATORY
         ;
+
 titleline:
-        TITLE WHITESPACES COLON WHITESPACES WORDS
+        NOTNEWLINES TITLE WHITESPACES WORD COLON WHITESPACES WORDS NOTNEWLINES 
         ;
 chapterline:
-        CHAPTER WHITESPACES WORD COLON WHITESPACES WORDS
+        NOTNEWLINES CHAPTER WHITESPACES WORD COLON WHITESPACES WORDS NOTNEWLINES
         ;
 sectionline:
-        SECTION WHITESPACES SECTIONNUM COLON WHITESPACES WORDS
+        NOTNEWLINES SECTION NOTNEWLINES SECTIONNUM COLON NOTNEWLINES WORDS NOTNEWLINES
         ;
 
 %%
 
   
 //driver code  
-void main() 
+int main() 
  { 
-  yyparse(); 
+  yyparse();
+  return 0; 
  } 
  void yyerror(char *msg) 
  { 

@@ -3,6 +3,7 @@
 %{ 
 #include<stdio.h> 
 #include "y.tab.h" 
+
 int decl=0;
 int inter=0;
 int excl=0;
