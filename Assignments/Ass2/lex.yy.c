@@ -354,8 +354,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 13
-#define YY_END_OF_BUFFER 14
+#define YY_NUM_RULES 14
+#define YY_END_OF_BUFFER 15
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -365,10 +365,10 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[42] =
     {   0,
-        1,    1,   14,   13,   10,   11,   11,   11,    9,    3,
-        9,    2,    1,    5,    4,   12,   12,   12,   12,   11,
-        1,    0,    1,   12,   12,   12,   12,   12,   12,   12,
-       12,   12,   12,   12,   12,    6,   12,   12,    7,    8,
+        1,    1,   15,   14,   10,   11,   12,   12,    9,    3,
+        9,    2,    1,    5,    4,   13,   13,   13,   13,   12,
+        1,    0,    1,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,    6,   13,   13,    7,    8,
         0
     } ;
 
@@ -480,13 +480,11 @@ char *yytext;
 #line 4 "words.l"
 #include<bits/stdc++.h>
 #include "y.tab.h"
-int decl=0;
-int inter=0;
-int excl=0;
+
 int words=0;
-#line 488 "lex.yy.c"
+#line 486 "lex.yy.c"
 /* Rules Section*/
-#line 490 "lex.yy.c"
+#line 488 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -703,10 +701,9 @@ YY_DECL
 		}
 
 	{
-#line 24 "words.l"
+#line 22 "words.l"
 
-
-#line 710 "lex.yy.c"
+#line 707 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -765,71 +762,77 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 26 "words.l"
-{printf("num\n");printf("%s",yytext);return NUM;}
+#line 23 "words.l"
+{yylval.string = yytext; return NUM;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 27 "words.l"
-{ printf("decl\n");decl++;yylval.number = decl;return DECLARATIVE;}
+#line 24 "words.l"
+{ return DECLARATIVE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 28 "words.l"
-{printf("excl\n"); yylval.number = 1;return EXCLAMATORY;}
+#line 25 "words.l"
+{ return EXCLAMATORY;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 29 "words.l"
-{ printf("inter\n");yylval.number = 1;return INTERROGATIVE;}
+#line 26 "words.l"
+{ return INTERROGATIVE;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 30 "words.l"
-{printf("colon\n");return COLON;}
+#line 27 "words.l"
+{return COLON;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 31 "words.l"
-{printf("title\n");return TITLE;}
+#line 28 "words.l"
+{return TITLE;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 32 "words.l"
-{printf("chapt\n");return CHAPTER;}
+#line 29 "words.l"
+{return CHAPTER;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 33 "words.l"
-{printf("sect\n");yylval.string = strdup(yytext);return SECTION;}
+#line 30 "words.l"
+{yylval.string = strdup(yytext);return SECTION;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 34 "words.l"
-{printf("wordspe\n");return WORDSEPARATOR;}
+#line 31 "words.l"
+{return WORDSEPARATOR;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 35 "words.l"
-{printf("notnew\n");return NOTNEWLINES;}
+#line 32 "words.l"
+{return NOTNEWLINES;}
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 36 "words.l"
-{printf("whitesp\n");return WHITESPACE;}
+#line 33 "words.l"
+{return NEWLINE;}
 	YY_BREAK
 case 12:
+/* rule 12 can match eol */
 YY_RULE_SETUP
-#line 37 "words.l"
-{printf("word\n");yylval.string = strdup(yytext);return WORD;}
+#line 34 "words.l"
+{return WHITESPACE;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 38 "words.l"
+#line 35 "words.l"
+{yylval.string = strdup(yytext);return WORD;}
+	YY_BREAK
+case 14:
+YY_RULE_SETUP
+#line 37 "words.l"
 ECHO;
 	YY_BREAK
-#line 833 "lex.yy.c"
+#line 836 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1834,7 +1837,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 38 "words.l"
+#line 37 "words.l"
 
 
 

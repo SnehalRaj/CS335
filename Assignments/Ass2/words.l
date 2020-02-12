@@ -3,9 +3,7 @@
 %{
 #include<bits/stdc++.h>
 #include "y.tab.h"
-int decl=0;
-int inter=0;
-int excl=0;
+
 int words=0;
 %} 
   
@@ -21,19 +19,20 @@ Notnewline " "|\t
 Colon :
 
 /* Rules Section*/
-%% 
+%%
+{Num} {yylval.string = yytext; return NUM;}
+"." { return DECLARATIVE;}
+"!" { return EXCLAMATORY;}
+"?" { return INTERROGATIVE;}
+: {return COLON;}
+Title {return TITLE;}
+Chapter {return CHAPTER;}
+Section {yylval.string = strdup(yytext);return SECTION;}
+{WordSeparator} {return WORDSEPARATOR;}
+{Notnewline} {return NOTNEWLINES;}
+\n {return NEWLINE;}
+{WhiteSpace} {return WHITESPACE;}
+{Word} {yylval.string = strdup(yytext);return WORD;}
 
-{Num} {printf("num\n");printf("%s",yytext);return NUM;}
-"." { printf("decl\n");decl++;yylval.number = decl;return DECLARATIVE;}
-"!" {printf("excl\n"); yylval.number = 1;return EXCLAMATORY;}
-"?" { printf("inter\n");yylval.number = 1;return INTERROGATIVE;}
-: {printf("colon\n");return COLON;}
-Title {printf("title\n");return TITLE;}
-Chapter {printf("chapt\n");return CHAPTER;}
-Section {printf("sect\n");yylval.string = strdup(yytext);return SECTION;}
-{WordSeparator} {printf("wordspe\n");return WORDSEPARATOR;}
-{Notnewline} {printf("notnew\n");return NOTNEWLINES;}
-{WhiteSpace} {printf("whitesp\n");return WHITESPACE;}
-{Word} {printf("word\n");yylval.string = strdup(yytext);return WORD;}
 %% 
 

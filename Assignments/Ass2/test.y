@@ -2,8 +2,15 @@
 %{ 
    /* Definition section */
 #include<bits/stdc++.h>
+#include <string>
+using namespace std;
 int     yylex();
  void yyerror(char *msg);
+ int decl=0;
+ int inter=0;
+ int excl=0;
+ int numwords=0;
+ string title;
 %} 
 
 
@@ -11,10 +18,9 @@ int     yylex();
 %start  dissertation
 %union 
 {
-        int number;
-        char *string;
+       char* string;
 }
-%type <string>  WORD SECTION
+%type <string>  WORD SECTION words word NUM endwords NEWLINE titleline wordsep WORDSEPARATOR chapterline sectionline
 // %type <string> words
 %%
 
@@ -30,30 +36,17 @@ lines:  titleline
         sectionline
         |
         sentences
+        |
+        NEWLINE
         ;
-// sentences:
-//         NOTNEWLINES sentence NOTNEWLINES sentences
-//         |
-//         NOTNEWLINES
-//         ;
-// sentence:
-//         EXCLAMATORY
-//         |
-//         DECLARATIVE
-//         |
-//         INTERROGATIVE
-//         ;
-// titleline:
-//         NOTNEWLINES TITLE WHITESPACES WORD COLON WHITESPACES WORDS NOTNEWLINES 
-//         ;
 chapterline:
-        notnewlines CHAPTER wordsep NUM wordsep COLON wordsep words
+        notnewlines CHAPTER wordsep NUM wordsep COLON wordsep endwords NEWLINE {printf("Chapter %s",$4);}
         ;
 titleline:
-        notnewlines TITLE wordsep COLON wordsep words
+        notnewlines TITLE wordsep COLON wordsep endwords NEWLINE{printf("Title: %s\n",$6);}
         ;
 sectionline:
-        notnewlines SECTION wordsep NUM wordsep COLON wordsep words
+        notnewlines SECTION wordsep NUM wordsep COLON wordsep endwords NEWLINE {printf("        Section %s",$4);}
         ;
 sentences:
         sentence wordsep sentences
@@ -68,21 +61,36 @@ sentence:
         exclamatory
         ;
 declarative:
-        notnewlines words DECLARATIVE
+        notnewlines words DECLARATIVE{decl++;}
         ;
 interrogative:
-        notnewlines words INTERROGATIVE
+        notnewlines words INTERROGATIVE{inter++;}
         ;
 exclamatory:
-        notnewlines words EXCLAMATORY
+        notnewlines words EXCLAMATORY{excl++;}
         ;
-words:
-        word wordsep words
+endwords:
+        word wordsep endwords { char *str = (char*) malloc(strlen($1) +1+strlen($3) + 1);
+      strcpy(str, $1);
+      strcat(str,  " ");
+      strcat(str, $3);
+      $$ = str;
+    }
         |
-        word
+        word{ $$ = $1; }
         ;
 word:
         WORD
+        |
+        NUM
+        ;
+words:
+        cntword wordsep words
+        |
+        cntword
+        ;
+cntword:
+        WORD{numwords++;}
         |
         NUM
         ;
@@ -91,8 +99,8 @@ whitespaces:
         |
         ;
 wordsep:
-        WORDSEPARATOR wordsep
-        |
+        WORDSEPARATOR wordsep 
+        | 
         ;
 
 notnewlines:
@@ -107,6 +115,10 @@ notnewlines:
 int main() 
  { 
   yyparse();
+  printf("\nNumber of Declarative sentences:%d\n",decl);
+  printf("Number of Interrogative sentences:%d\n",inter);
+  printf("Number of Exlamatory sentences:%d\n",excl);
+  printf("Number of words:%d\n",numwords);
   return 0; 
  } 
  void yyerror(char *msg) 
