@@ -1,4 +1,4 @@
-Title: An Elementary              Introduction  to Compiler Design
+Title: An Elementary Introduction  to Compiler Design
 
 Chapter 1 :Introduction
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vel ante non orci bibendum luctus. Phasellus molestie a quam eget mollis. Quisque vel mattis odio, nec suscipit ligula? Fusce vestibulum purus dolor, eget auctor odio vulputate sed. Nulla maximus elit est, et commodo erat consectetur id.Nullam ornare sem vel blandit pharetra. Duis et mi eu dolor efficitur mattis.
@@ -21,7 +21,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at ultricies maur
 
 
 
-Chapter              3: Contribution One
+Chapter 3: Contribution One
 
 Vivamus faucibus est eu enim molestie, sit amet tempus ante mattis. Morbi non eleifend nisl. Donec iaculis semper blandit. Pellentesque molestie vitae libero eu porttitor. Sed elementum, ipsum nec fermentum molestie, lorem ipsum mattis elit, eget interdum tellus neque a ipsum. Ut eget urna at ante molestie rhoncus sit amet et quam. Sed in feugiat ex. Vestibulum aliquet suscipit mi. Donec ullamcorper lacus sed pellentesque fringilla. Mauris eget convallis velit. Suspendisse id sem id arcu convallis vulputate. Aliquam laoreet pellentesque diam. Mauris imperdiet suscipit libero, nec blandit magna rutrum in. Sed in justo id lorem iaculis egestas. Praesent interdum sem vitae dui gravida pellentesque.
 
